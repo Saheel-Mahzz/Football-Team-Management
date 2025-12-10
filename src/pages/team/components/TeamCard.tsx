@@ -1,21 +1,16 @@
 // PlayerCard.tsx
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Player } from "@/types/players";
 
-const TeamCard = () => {
+const TeamCard = ({players}:{players:Player[]}) => {
   // Static data for ONE player
-  const player = {
-    id: 1,
-    name: "Lionel Messi",
-    position: "Forward",
-    jerseyNumber: 10,
-    age: 36,
-    avatarUrl: "",
-    nationality: "Argentina"
-  };
+
 
   return (
   <div className="grid md:grid-cols-3 gap-2">
+
+    {players?.map((player)=>(
   <Card className="border shadow-sm hover:shadow-md transition-shadow w-full">
     <CardContent className="pt-6 ">
       <div className="flex justify-between items-start mb-4">
@@ -53,6 +48,8 @@ const TeamCard = () => {
       </Button>
     </CardFooter>
   </Card>
+    ))}
+
 
 
 </div>

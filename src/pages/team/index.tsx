@@ -1,4 +1,4 @@
-import TeamCard from "./components/teamCard";
+import TeamGrid from "./components/TeamGrid";
 
 export default function Team() {
   return (
@@ -8,7 +8,7 @@ export default function Team() {
 
       {/* <PlayerForm/>
        */}
-       <TeamCard/>
+       <TeamGrid/>
     </div>
   )
 }
