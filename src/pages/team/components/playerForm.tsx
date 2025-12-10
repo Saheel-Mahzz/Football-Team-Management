@@ -1,9 +1,9 @@
-// components/players/PlayerForm.tsx
 
 import { Button } from "@/components/ui/button";
 import {
   Form
 } from "@/components/ui/form";
+import { POSITION_OPTIONS } from "@/pages/constants/playersRoles";
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,12 +26,7 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
     onSubmit?.(data);
   };
 
-  const positionOptions = [
-    { value: 'GK', label: 'Goalkeeper (GK)' },
-    { value: 'DEF', label: 'Defender (DEF)' },
-    { value: 'MID', label: 'Midfielder (MID)' },
-    { value: 'FWD', label: 'Forward (FWD)' },
-  ];
+
 
   return (
     <Form {...form}>
@@ -47,7 +42,7 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
           control={form.control}
           name="position"
           label="Position *"
-          options={positionOptions}
+          options={POSITION_OPTIONS}
           placeholder="Select position"
         />
 
