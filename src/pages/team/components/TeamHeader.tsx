@@ -18,6 +18,21 @@ export default function TeamHeader() {
       });
       return
         }
+
+        if(validateJerseyNumber(players,10)){
+            toast({
+                title:'Jersey taken',
+                variant:'destructive'
+            })
+        }
+
+        // const positiionError = validatePositionMinimums(players,player)
+        // if(positiionError){
+        //           toast({
+        //         title:positiionError,
+        //         variant:'destructive'
+        //     })
+        // }
     }
   return (
     <>

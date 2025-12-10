@@ -29,6 +29,15 @@ import TeamCard from "./TeamCard"
   },
 ]
 
+export const player =  {
+    id: 3,
+    name: "Lionel Messi",
+    position: "GK",
+    jerseyNumber: 10,
+    age: 36,
+    avatarUrl: "",
+    nationality: "Argentina"
+  }
 // const players =[]
 
 
