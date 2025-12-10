@@ -1,9 +1,24 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { useToast } from '@/hooks/use-toast'
+import { validateSquadLimit } from '../utils/teamRules'
 import TeamForm from './TeamForm'
+import { players } from './TeamGrid'
 
 export default function TeamHeader() {
+    const {toast} = useToast()
+    const handleAddPlayer = ()=>{
+        console.log('handleadd player')
+        if(validateSquadLimit(players)){
+          toast({
+        title: "Squad Full",
+        description: "Maximum 22 players reached",
+        variant: "destructive"
+      });
+      return
+        }
+    }
   return (
     <>
      <div className="flex justify-between items-center mb-6">
@@ -15,7 +30,7 @@ export default function TeamHeader() {
     </Button>
     </DialogTrigger>
     <DialogContent>
-        <TeamForm/>
+        <TeamForm onSubmit={handleAddPlayer}/>
     </DialogContent>
     </Dialog>
   </div>

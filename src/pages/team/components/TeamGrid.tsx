@@ -1,6 +1,6 @@
-import TeamCard from "./teamCard"
+import TeamCard from "./TeamCard"
 
-  const players = [{
+  export const players = [{
     id: 1,
     name: "Lionel Messi",
     position: "Forward",
