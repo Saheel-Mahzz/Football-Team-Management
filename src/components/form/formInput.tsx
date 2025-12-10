@@ -22,13 +22,7 @@ export const FormInput = ({ control, name, label, placeholder, type = "text" }: 
             type={type}
             placeholder={placeholder} 
             {...field}
-            onChange={(e) => {
-              if (type === "number") {
-                field.onChange(parseInt(e.target.value) || 0);
-              } else {
-                field.onChange(e.target.value);
-              }
-            }}
+         
           />
         </FormControl>
         <FormMessage />

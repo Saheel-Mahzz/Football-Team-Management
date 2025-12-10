@@ -19,7 +19,15 @@ interface PlayerFormProps {
 const TeamForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
   const form = useForm<PlayerFormData>({
     resolver: zodResolver(playerSchema),
-    defaultValues: initialData ,
+    defaultValues: {
+      name:'',
+      age:20,
+      avatarUrl:'',
+      jerseyNumber:1,
+      nationality:'',
+      position:'GK'
+    } ,
+    
   });
 
   const handleSubmit = (data: PlayerFormData) => {
