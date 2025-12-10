@@ -4,7 +4,6 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Player } from "@/types/players";
 
 const TeamCard = ({players}:{players:Player[]}) => {
-  // Static data for ONE player
 
 
   return (

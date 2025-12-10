@@ -1,47 +1,12 @@
+import { Player } from "@/types/players"
 import TeamCard from "./TeamCard"
 
-  export const players = [{
-    id: 1,
-    name: "Lionel Messi",
-    position: "Forward",
-    jerseyNumber: 10,
-    age: 36,
-    avatarUrl: "",
-    nationality: "Argentina"
-  },
-  {
-    id: 2,
-    name: "Lionel Messi",
-    position: "Forward",
-    jerseyNumber: 10,
-    age: 36,
-    avatarUrl: "",
-    nationality: "Argentina"
-  },
-  {
-    id: 3,
-    name: "Lionel Messi",
-    position: "Forward",
-    jerseyNumber: 10,
-    age: 36,
-    avatarUrl: "",
-    nationality: "Argentina"
-  },
-]
-
-export const player =  {
-    id: 3,
-    name: "Lionel Messi",
-    position: "GK",
-    jerseyNumber: 10,
-    age: 36,
-    avatarUrl: "",
-    nationality: "Argentina"
-  }
 // const players =[]
 
 
-export default function TeamGrid() {
+export default function TeamGrid({players}:{players:Player[]}) {
+
+  console.log('total players',players)
   if(players.length === 0){
     return(
             <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-lg">

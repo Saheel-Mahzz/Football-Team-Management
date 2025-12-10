@@ -16,7 +16,8 @@ interface PlayerFormProps {
   onCancel?: () => void;
 }
 
-const TeamForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
+const TeamForm = ({  onCancel,onSubmit }: PlayerFormProps) => {
+  // const {addPlayer} = useTeamManagement()
   const form = useForm<PlayerFormData>({
     resolver: zodResolver(playerSchema),
     defaultValues: {

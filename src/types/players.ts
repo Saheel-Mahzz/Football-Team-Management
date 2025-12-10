@@ -1,7 +1,7 @@
 export type Position = 'GK' | 'DEF' | 'MID' | 'FWD'
 
 export interface Player{
-    id:number,
+    // id:number,
     name:string,
     position:Position,
     jerseyNumber:number,
