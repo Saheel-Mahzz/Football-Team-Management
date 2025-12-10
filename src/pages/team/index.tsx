@@ -1,4 +1,4 @@
-import PlayerForm from "@/components/players/playerForm";
+import PlayerForm from "./components/playerForm";
 
 export default function Team() {
   return (

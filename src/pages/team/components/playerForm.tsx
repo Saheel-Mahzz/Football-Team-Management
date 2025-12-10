@@ -7,8 +7,8 @@ import {
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { FormInput } from "../form/formInput";
-import { FormSelect } from "../form/formSelect";
+import { FormInput } from "../../../components/form/formInput";
+import { FormSelect } from "../../../components/form/formSelect";
 
 interface PlayerFormProps {
   initialData?: PlayerFormData;
