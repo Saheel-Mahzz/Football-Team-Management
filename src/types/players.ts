@@ -9,3 +9,4 @@ export interface Player{
     avatar?:string,
     nationality?:string
 }
+
