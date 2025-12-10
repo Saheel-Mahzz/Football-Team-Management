@@ -2,13 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Form
+  Form
 } from "@/components/ui/form";
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { FormInput } from "./formInput";
-import { FormSelect } from "./formSelect";
+import { FormInput } from "../form/formInput";
+import { FormSelect } from "../form/formSelect";
 
 interface PlayerFormProps {
   initialData?: PlayerFormData;
