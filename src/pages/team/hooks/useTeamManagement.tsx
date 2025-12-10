@@ -1,6 +1,6 @@
 import { useToast } from '@/hooks/use-toast'
 import { Player } from '@/types/players'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { validateSquadLimit } from '../utils/teamRules'
 
 export default function useTeamManagement() {
@@ -19,9 +19,6 @@ return
 setPlayers(prev =>[...prev,player])
 console.log('successfully created',players)
   }
-  useEffect(() => {
-  console.log('Players updated:', players);
-}, [players]);
 
   return {
     addPlayer,
