@@ -6,7 +6,7 @@ export interface Player{
     position:Position,
     jerseyNumber:number,
     age:number,
-    avatar?:string,
+    avatarUrl?:string,
     nationality?:string
 }
 

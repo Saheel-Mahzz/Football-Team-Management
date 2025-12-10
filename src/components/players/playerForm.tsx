@@ -26,7 +26,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
     onSubmit?.(data);
   };
 
-  // POSITION OPTIONS
   const positionOptions = [
     { value: 'GK', label: 'Goalkeeper (GK)' },
     { value: 'DEF', label: 'Defender (DEF)' },
@@ -37,7 +36,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        {/* NAME */}
         <FormInput
           control={form.control}
           name="name"
@@ -45,7 +43,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
           placeholder="Enter player name"
         />
 
-        {/* POSITION */}
         <FormSelect
           control={form.control}
           name="position"
@@ -54,7 +51,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
           placeholder="Select position"
         />
 
-        {/* JERSEY NUMBER */}
         <FormInput
           control={form.control}
           name="jerseyNumber"
@@ -63,7 +59,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
           type="number"
         />
 
-        {/* AGE */}
         <FormInput
           control={form.control}
           name="age"
@@ -72,7 +67,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
           type="number"
         />
 
-        {/* AVATAR URL */}
         <FormInput
           control={form.control}
           name="avatarUrl"
@@ -80,7 +74,6 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
           placeholder="https://example.com/avatar.jpg"
         />
 
-        {/* BUTTONS */}
         <div className="flex justify-end space-x-2 pt-4">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
