@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Player } from '@/types/players';
+import { getTeamStatus } from '../utils/getTeamStatus';
 import TeamForm from './TeamForm';
 
 export default function TeamHeader({addPlayer,players}:{players:Player[]}) {
@@ -10,6 +11,8 @@ export default function TeamHeader({addPlayer,players}:{players:Player[]}) {
     const gkCount = players.filter((p)=>p.position === 'GK').length
     const defCount = players.filter((p)=> p.position === 'DEF').length
     const forwardCount = players.filter((p)=>p.position === 'FWD').length
+
+    const status = getTeamStatus(totalPlayers)
   
   return (
     <>
@@ -28,10 +31,12 @@ export default function TeamHeader({addPlayer,players}:{players:Player[]}) {
   </div>
 
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-  <Card className="bg-blue-50 border-blue-200 p-4">
-    <div className="text-sm text-blue-700">Total Squad</div>
-    <div className="text-2xl font-bold text-blue-800">{totalPlayers}/22</div>
-  </Card>
+<Card className={`${status.bgColor} ${status.borderColor} p-4`}>
+  <div className={`text-sm ${status.textColor}`}>Total Squad</div>
+  <div className={`text-2xl font-bold ${status.textColor}`}>
+    {totalPlayers}/22
+  </div>
+</Card>
   
   <Card className="bg-green-50 border-green-200 p-4">
     <div className="text-sm text-green-700">Goalkeepers</div>
