@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form
 } from "@/components/ui/form";
-import { POSITION_OPTIONS } from "@/lib/constants/playersRoles";
+import { POSITION_OPTIONS } from "@/constants/playersRoles";
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,7 +16,7 @@ interface PlayerFormProps {
   onCancel?: () => void;
 }
 
-const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
+const TeamForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
   const form = useForm<PlayerFormData>({
     resolver: zodResolver(playerSchema),
     defaultValues: initialData ,
@@ -80,4 +80,4 @@ const PlayerForm = ({ initialData, onSubmit, onCancel }: PlayerFormProps) => {
   );
 };
 
-export default PlayerForm;
+export default TeamForm;
