@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form
 } from "@/components/ui/form";
-import { POSITION_OPTIONS } from "@/pages/constants/playersRoles";
+import { POSITION_OPTIONS } from "@/lib/constants/playersRoles";
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
