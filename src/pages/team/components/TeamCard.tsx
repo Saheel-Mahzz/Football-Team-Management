@@ -1,15 +1,18 @@
 // PlayerCard.tsx
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Player } from "@/types/players";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Edit, Trash2 } from "lucide-react";
+import TeamForm from "./TeamForm";
 
-const TeamCard = ({players}:{players:Player[]}) => {
-
+const TeamCard = ({player}:{player:Player}) => {
 
   return (
-  <div className="grid md:grid-cols-3 gap-2">
 
-    {players?.map((player)=>(
+
   <Card className="border shadow-sm hover:shadow-md transition-shadow w-full">
     <CardContent className="pt-6 ">
       <div className="flex justify-between items-start mb-4">
@@ -39,19 +42,51 @@ const TeamCard = ({players}:{players:Player[]}) => {
     </CardContent>
 
     <CardFooter className="grid md:grid-cols-2 gap-2 border-t pt-4">
-      <Button variant="outline" size="sm" className="px-4">
-        Edit
-      </Button>
-      <Button variant="destructive" size="sm" className="px-4">
-        Delete
-      </Button>
+      <Dialog>
+        <DialogTrigger>          <Button 
+              variant="outline" 
+              size="sm" 
+              className="gap-2 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition-colors w-full"
+            >
+              <Edit className="w-4 h-4" />
+              Edit
+            </Button>
+      </DialogTrigger>
+
+<DialogContent>
+  <TeamForm initialData={player}/>
+</DialogContent>
+      </Dialog>
+     <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button 
+              variant="destructive" 
+              size="sm" 
+              className="gap-2"
+            >
+              <Trash2 className="w-4 h-4" />
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete <strong>{player.name}</strong> from your team. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction 
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Delete Player
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
     </CardFooter>
   </Card>
-    ))}
-
-
-
-</div>
   );
 };
 

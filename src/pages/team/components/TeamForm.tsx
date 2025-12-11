@@ -16,11 +16,11 @@ interface PlayerFormProps {
   onCancel?: () => void;
 }
 
-const TeamForm = ({  onCancel,onSubmit }: PlayerFormProps) => {
+const TeamForm = ({ initialData, onCancel,onSubmit }: PlayerFormProps) => {
   // const {addPlayer} = useTeamManagement()
   const form = useForm<PlayerFormData>({
     resolver: zodResolver(playerSchema),
-    defaultValues: {
+    defaultValues:  initialData ||{
       name:'',
       age:20,
       avatarUrl:'',

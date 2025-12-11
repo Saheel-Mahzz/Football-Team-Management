@@ -40,17 +40,24 @@ export default function TeamHeader({addPlayer,players}:{players:Player[]}) {
   
   <Card className="bg-green-50 border-green-200 p-4">
     <div className="text-sm text-green-700">Goalkeepers</div>
-    <div className="text-2xl font-bold text-green-800">{gkCount}</div>
+    <div className="text-2xl font-bold text-green-800">{gkCount}
+    {gkCount < 1 && <span className='text-red-500 text-sm ml-2'>(Min:1)</span> }
+    </div>
   </Card>
   
   <Card className="bg-yellow-50 border-yellow-200 p-4">
     <div className="text-sm text-yellow-700">Defenders</div>
-    <div className="text-2xl font-bold text-yellow-800">{defCount}</div>
+    <div className="text-2xl font-bold text-yellow-800">{defCount}
+
+      {defCount < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
+    </div>
   </Card>
   
   <Card className="bg-red-50 border-red-200 p-4">
     <div className="text-sm text-red-700">Forwards</div>
-    <div className="text-2xl font-bold text-red-800">{forwardCount}</div>
+    <div className="text-2xl font-bold text-red-800">{forwardCount}
+      {forwardCount < 2 && <span className='text-red-500 text-sm ml-2'>(Min:2)</span>}
+    </div>
   </Card>
 </div>
 </>

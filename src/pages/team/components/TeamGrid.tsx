@@ -17,6 +17,11 @@ export default function TeamGrid({players}:{players:Player[]}) {
   }
 
   return (
-    <TeamCard players={players}/>
+      <div className="grid md:grid-cols-3 gap-2">
+    {players.map((player)=>(
+   <TeamCard player={player}/>
+    ))}
+ 
+    </div>
   )
 }
