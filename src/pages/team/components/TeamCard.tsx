@@ -8,7 +8,6 @@ import { Edit, Trash2 } from "lucide-react";
 import TeamForm from "./TeamForm";
 
 const TeamCard = ({player,updatePlayer,deletePlayer}) => {
-  console.log('i am players',player)
 
   return (
 

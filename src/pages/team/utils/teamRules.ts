@@ -3,6 +3,7 @@ import { Player } from "@/types/players";
 export const validateSquadLimit =(players:Player[])=> players.length >= 22
 
 export const validateJerseyNumber=(players:Player[],jerseyNumber) =>{
+    console.log('players',players,jerseyNumber)
     return players.some((p)=> p.jerseyNumber === jerseyNumber)
 }
 

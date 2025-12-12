@@ -33,7 +33,6 @@ const TeamForm = ({ initialData, onCancel,onSubmit }: PlayerFormProps) => {
 
   const handleSubmit = (data: PlayerFormData) => {
     onSubmit?.(data);
-    console.log('i am clicked',data)
   };
 
 

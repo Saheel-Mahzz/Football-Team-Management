@@ -21,15 +21,11 @@ const newPlayer = {
   id:Date.now()
 }
 setPlayers(prev =>[...prev,newPlayer])
-console.log('successfully created',players)
   }
 
   const updatePlayer = (id:number,updatePlayer:Player) =>{
-    console.log('players',players)
-    const playerIndex = players.findIndex((p)=> p.id === id)
-    console.log('i am id',id)
-    console.log('player index',playerIndex)
-    console.log('running update player',updatePlayer)
+    // const playerIndex = players.findIndex((p)=> p.id === id)
+   
 
     // if(validateJerseyNumber(players,updatePlayer?.jerseyNumber)){
     //   toast({
