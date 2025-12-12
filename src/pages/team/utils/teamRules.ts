@@ -2,9 +2,9 @@ import { Player } from "@/types/players";
 
 export const validateSquadLimit =(players:Player[])=> players.length >= 22
 
-export const validateJerseyNumber=(players:Player[],jerseyNumber) =>{
+export const validateJerseyNumber=(players:Player[],jerseyNumber,excludeId?:number) =>{
     console.log('players',players,jerseyNumber)
-    return players.some((p)=> p.jerseyNumber === jerseyNumber)
+    return players.some((p)=> p.jerseyNumber === jerseyNumber && p.id !== excludeId)
 }
 
 // export const validatePositionMinimums = (players: Player[], newPlayer: Player) => {

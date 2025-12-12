@@ -1,7 +1,7 @@
 import { useToast } from '@/hooks/use-toast'
 import { Player } from '@/types/players'
 import { useState } from 'react'
-import { validateSquadLimit } from '../utils/teamRules'
+import { validateJerseyNumber, validateSquadLimit } from '../utils/teamRules'
 
 export default function useTeamManagement() {
   const [players,setPlayers] = useState<Player[]>([])
@@ -34,6 +34,14 @@ setPlayers(prev =>[...prev,newPlayer])
     //   })
     // }
 // setPlayers(prev => [...prev,updatePlayer])
+
+if(validateJerseyNumber(players,updatePlayer?.jerseyNumber,id)){
+        toast({
+            title:'Jersey number!',
+    description:'Jersey number have already been taken!'
+      })
+      return
+}
 setPlayers(prev => prev.map((p)=> p?.id === id? {...updatePlayer,id} : p))
   
   toast({
