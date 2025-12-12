@@ -3,12 +3,12 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Player } from "@/types/players";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Edit, Trash2 } from "lucide-react";
 import TeamForm from "./TeamForm";
 
-const TeamCard = ({player}:{player:Player}) => {
+const TeamCard = ({player,updatePlayer}) => {
+  console.log('i am players',player)
 
   return (
 
@@ -54,7 +54,7 @@ const TeamCard = ({player}:{player:Player}) => {
       </DialogTrigger>
 
 <DialogContent>
-  <TeamForm initialData={player}/>
+  <TeamForm initialData={player} onSubmit={(data)=>updatePlayer(player.id,data)}/>
 </DialogContent>
       </Dialog>
      <AlertDialog>

@@ -16,12 +16,40 @@ toast({
 return
 
 }
-setPlayers(prev =>[...prev,player])
+const newPlayer = {
+  ...player,
+  id:Date.now()
+}
+setPlayers(prev =>[...prev,newPlayer])
 console.log('successfully created',players)
+  }
+
+  const updatePlayer = (id:number,updatePlayer:Player) =>{
+    console.log('players',players)
+    const playerIndex = players.findIndex((p)=> p.id === id)
+    console.log('i am id',id)
+    console.log('player index',playerIndex)
+    console.log('running update player',updatePlayer)
+
+    // if(validateJerseyNumber(players,updatePlayer?.jerseyNumber)){
+    //   toast({
+    //         title:'Jersey number!',
+    // description:'Jersey number have already been taken!'
+    //   })
+    // }
+// setPlayers(prev => [...prev,updatePlayer])
+setPlayers(prev => prev.map((p)=> p?.id === id? {...updatePlayer,id} : p))
+  
+  toast({
+    title: "Player updated!",
+    description: `${updatePlayer.name} updated successfully`
+  });
+
   }
 
   return {
     addPlayer,
-    players
+    players,
+    updatePlayer
   }
 }

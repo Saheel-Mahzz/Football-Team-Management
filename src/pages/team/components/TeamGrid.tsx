@@ -4,7 +4,7 @@ import TeamCard from "./TeamCard"
 // const players =[]
 
 
-export default function TeamGrid({players}:{players:Player[]}) {
+export default function TeamGrid({players,updatePlayer}:{players:Player[]}) {
 
   console.log('total players',players)
   if(players.length === 0){
@@ -19,7 +19,7 @@ export default function TeamGrid({players}:{players:Player[]}) {
   return (
       <div className="grid md:grid-cols-3 gap-2">
     {players.map((player)=>(
-   <TeamCard player={player}/>
+   <TeamCard player={player} updatePlayer={updatePlayer}/>
     ))}
  
     </div>
