@@ -16,6 +16,13 @@ toast({
 return
 
 }
+if(validateJerseyNumber(players,player?.jerseyNumber)){
+    toast({
+            title:'Jersey number!',
+    description:'Jersey number have already been taken!'
+      })
+      return
+}
 const newPlayer = {
   ...player,
   id:Date.now()
@@ -25,16 +32,6 @@ setPlayers(prev =>[...prev,newPlayer])
 
   const updatePlayer = (id:number,updatePlayer:Player) =>{
     // const playerIndex = players.findIndex((p)=> p.id === id)
-   
-
-    // if(validateJerseyNumber(players,updatePlayer?.jerseyNumber)){
-    //   toast({
-    //         title:'Jersey number!',
-    // description:'Jersey number have already been taken!'
-    //   })
-    // }
-// setPlayers(prev => [...prev,updatePlayer])
-
 if(validateJerseyNumber(players,updatePlayer?.jerseyNumber,id)){
         toast({
             title:'Jersey number!',
