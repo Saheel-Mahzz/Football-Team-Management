@@ -47,9 +47,15 @@ setPlayers(prev => prev.map((p)=> p?.id === id? {...updatePlayer,id} : p))
 
   }
 
+
+  const deletePlayer = (id:number)=>{
+    setPlayers((prev) => prev.filter((p)=> p.id !== id))
+  }
+
   return {
     addPlayer,
     players,
-    updatePlayer
+    updatePlayer,
+    deletePlayer
   }
 }

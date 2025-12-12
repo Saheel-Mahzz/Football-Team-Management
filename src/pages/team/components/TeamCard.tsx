@@ -7,7 +7,7 @@ import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Edit, Trash2 } from "lucide-react";
 import TeamForm from "./TeamForm";
 
-const TeamCard = ({player,updatePlayer}) => {
+const TeamCard = ({player,updatePlayer,deletePlayer}) => {
   console.log('i am players',player)
 
   return (
@@ -79,6 +79,8 @@ const TeamCard = ({player,updatePlayer}) => {
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction 
                 className="bg-red-600 hover:bg-red-700"
+              onClick={()=>deletePlayer(player?.id)}
+
               >
                 Delete Player
               </AlertDialogAction>
