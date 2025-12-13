@@ -6,21 +6,7 @@ export const XI_TEAM_ROUTE = '/starting-xi'
 
 export default function StartingXI() {
   const { players,startingXI,setStartingXI } = useTeamStore();
-  // const [startingXI, setStartingXI] = useState({
-  //   gk1: null,
-  //   def1: null,
-  //   def2: null,
-  //   def3: null,
-  //   def4: null,
-  //   mid1: null,
-  //   mid2: null,
-  //   mid3: null,
-  //   mid4: null,
-  //   fwd1: null,
-  //   fwd2: null,
-  // });
-
-  // Calculate substitutes
+ 
   const selectedIds = Object.values(startingXI).filter(Boolean);
   const substitutes = players.filter(p => !selectedIds.includes(p.id));
 
