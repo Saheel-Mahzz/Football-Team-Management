@@ -2,10 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Player } from '@/types/players';
+import { useState } from 'react';
 import { getTeamStatus } from '../utils/getTeamStatus';
 import TeamForm from './TeamForm';
 
 export default function TeamHeader({addPlayer,players}:{players:Player[]}) {
+  const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
 
     const totalPlayers = players.length;
     const gkCount = players.filter((p)=>p.position === 'GK').length
@@ -13,19 +15,27 @@ export default function TeamHeader({addPlayer,players}:{players:Player[]}) {
     const forwardCount = players.filter((p)=>p.position === 'FWD').length
 
     const status = getTeamStatus(totalPlayers)
+
+    const handleAddPlayer = (data:Player)=>{
+      const success = addPlayer(data)
+
+      if(success){
+        setIsDialogOpen(false)
+      }
+    }
   
   return (
     <>
      <div className="flex justify-between items-center mb-6">
     <h2 className="text-2xl font-semibold text-gray-800">Team Management</h2>
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
     <Button className="bg-blue-600 hover:bg-blue-700">
       Add Player
     </Button>
     </DialogTrigger>
     <DialogContent>
-        <TeamForm onSubmit={addPlayer} />
+        <TeamForm onSubmit={handleAddPlayer} />
     </DialogContent>
     </Dialog>
   </div>

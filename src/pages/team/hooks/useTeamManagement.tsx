@@ -13,7 +13,7 @@ toast({
     title:'Squad full!',
     description:'Max number reached!'
 })
-return
+return false
 
 }
 if(validateJerseyNumber(players,player?.jerseyNumber)){
@@ -21,13 +21,18 @@ if(validateJerseyNumber(players,player?.jerseyNumber)){
             title:'Jersey number!',
     description:'Jersey number have already been taken!'
       })
-      return
+      return false
 }
 const newPlayer = {
   ...player,
   id:Date.now()
 }
+toast({
+    title:'Player added',
+    description:'New Player successfully added!'
+})
 setPlayers(prev =>[...prev,newPlayer])
+return true
   }
 
   const updatePlayer = (id:number,updatePlayer:Player) =>{
@@ -37,7 +42,7 @@ if(validateJerseyNumber(players,updatePlayer?.jerseyNumber,id)){
             title:'Jersey number!',
     description:'Jersey number have already been taken!'
       })
-      return
+      return false
 }
 setPlayers(prev => prev.map((p)=> p?.id === id? {...updatePlayer,id} : p))
   
@@ -45,12 +50,17 @@ setPlayers(prev => prev.map((p)=> p?.id === id? {...updatePlayer,id} : p))
     title: "Player updated!",
     description: `${updatePlayer.name} updated successfully`
   });
+  return true
 
   }
 
 
   const deletePlayer = (id:number)=>{
     setPlayers((prev) => prev.filter((p)=> p.id !== id))
+    toast({
+      title:'Player Deleted',
+      description:'Player deleted succesfully!'
+    })
   }
 
   return {
@@ -60,3 +70,4 @@ setPlayers(prev => prev.map((p)=> p?.id === id? {...updatePlayer,id} : p))
     deletePlayer
   }
 }
+
