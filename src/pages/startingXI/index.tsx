@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useTeamStore } from "@/stores/useTeamStore";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Pitch } from "./components/Pitch";
 import SubstituteBench from "./components/SubstituteBench";
@@ -7,6 +9,7 @@ import SubstituteBench from "./components/SubstituteBench";
 export const XI_TEAM_ROUTE = '/starting-xi'
 
 export default function StartingXI() {
+  const navigate = useNavigate(); 
   const { players, startingXI, setStartingXI } = useTeamStore();
  
   const selectedIds = Object.values(startingXI).filter(Boolean);
@@ -26,11 +29,20 @@ export default function StartingXI() {
   return (
     <div className="min-h-screen p-6">
       <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Starting XI</h1>
-          <p className="text-sm text-gray-600">
-            {selectedIds.length}/11 players selected
-          </p>
+        <div className="flex items-center gap-3">
+          <Button 
+            variant="outline" 
+            size="icon"
+            onClick={() => navigate('/')}
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Starting XI</h1>
+            <p className="text-sm text-gray-600">
+              {selectedIds.length}/11 players selected
+            </p>
+          </div>
         </div>
         
         <Button 
@@ -50,7 +62,7 @@ export default function StartingXI() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 ">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
           <Pitch 
             startingXI={startingXI}
