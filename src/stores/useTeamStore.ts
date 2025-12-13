@@ -15,7 +15,7 @@ interface TeamStore {
   startingXI:Record<string,number | null>,
    setStartingXI: (slot: string, playerId: number | null) => void;
   addPlayer: (player: Player) => ActionResult;
-  updatePlayer: (id: number, player: Player) => void;
+  updatePlayer: (id: number, player: Player) => ActionResult;
   deletePlayer: (id: number) => ActionResult;
   setPlayers: (players: Player[]) => void;
 }
@@ -63,14 +63,9 @@ gk1: null,
 
 updatePlayer: (id: number, updatedPlayer: Player) => {
   const { players } = get();
-  
-  const jerseyTaken = players.some(p => 
-    p.jerseyNumber === updatedPlayer.jerseyNumber && 
-    p.id !== id
-  );
-  
-  if (jerseyTaken) {
-    return false; 
+
+  if (validateJerseyNumber(players,updatedPlayer?.jerseyNumber,id)) {
+      return { success: false, error: 'JERSEY_TAKEN' };
   }
   
   set((state) => ({
@@ -79,7 +74,7 @@ updatePlayer: (id: number, updatedPlayer: Player) => {
     )
   }));
   
-  return true; 
+  return {success:true}; 
 },
 
 deletePlayer: (id: number) => {

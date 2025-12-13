@@ -4,15 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ActionResult } from "@/stores/useTeamStore";
+import { getErrorMessage } from "@/types/errorHandler";
 import { Player } from "@/types/players";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Edit, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 import TeamForm from "./TeamForm";
 
 interface TeamCardProps {
   player: Player;
-  updatePlayer: (id: number, player: Player) => void;
+  updatePlayer: (id: number, player: Player) => ActionResult;
   deletePlayer: (id: number) => ActionResult;
 }
 
@@ -20,11 +22,13 @@ interface TeamCardProps {
 
 const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
 
+  const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
+
   const showDeleteToast = (wasInStartingXI: boolean) => {
   if (wasInStartingXI) {
     toast.warning("Player was in Starting XI! Removed and deleted.");
   } else {
-    toast.success("Player deleted!");
+    toast.success("Player deleted Successfully!");
   }
 };
   const handleDeletePlayer = (id: number) => {
@@ -34,6 +38,17 @@ const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
     showDeleteToast(result.isInStartingXI as boolean);
   }
 };
+
+const handleUpdatePlayer = (id:number,player:Player) =>{
+const result = updatePlayer(id,player)
+const {success,error} = result
+if (success) {
+    toast.success("Player updated Successfully!");
+  setIsDialogOpen(false);
+} else if (error) {
+  toast.error(getErrorMessage(error))
+}
+}
   return (
 
 
@@ -66,7 +81,7 @@ const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
     </CardContent>
 
     <CardFooter className="grid md:grid-cols-2 gap-2 border-t pt-4">
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger> 
            <Button 
               variant="outline" 
@@ -79,7 +94,7 @@ const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
       </DialogTrigger>
 
 <DialogContent>
-  <TeamForm initialData={player} onSubmit={(data)=>updatePlayer(player.id,data)}/>
+  <TeamForm initialData={player} onSubmit={(data)=>handleUpdatePlayer(player.id,data)}/>
 </DialogContent>
       </Dialog>
      <AlertDialog>
