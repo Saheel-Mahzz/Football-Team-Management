@@ -1,6 +1,6 @@
 export function Pitch(){
   return (
-    <div className="w-full aspect-[2/1] bg-green-600 rounded-xl border-4 border-white p-4">
+    <div className="w-full aspect-[2/1] bg-green-600 rounded-xl border-4 border-white p-4 h-full">
       <div className="grid grid-cols-4 grid-rows-3 h-full gap-4">
         
         <div className="col-start-2 row-start-1 flex items-center justify-center">
