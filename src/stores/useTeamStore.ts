@@ -4,11 +4,17 @@ import { validateJerseyNumber, validateSquadLimit } from '@/pages/team/utils/tea
 import { Player } from '@/types/players';
 import { create } from 'zustand';
 
+interface ActionResult {
+  success:boolean,
+  error?:string,
+  params?:string
+}
+
 interface TeamStore {
   players: Player[];
   startingXI:Record<string,number | null>,
    setStartingXI: (slot: string, playerId: number | null) => void;
-  addPlayer: (player: Player) => void;
+  addPlayer: (player: Player) => ActionResult;
   updatePlayer: (id: number, player: Player) => void;
   deletePlayer: (id: number) => void;
   setPlayers: (players: Player[]) => void;
@@ -34,15 +40,11 @@ gk1: null,
     startingXI: { ...state.startingXI, [slot]: playerId }
   })),
   
-//   addPlayer: (player) => set((state) => ({
-//     players: [...state.players, player]
-//   })),
 
       addPlayer: (player: Player) => {
     const { players } = get();
     
     if (validateSquadLimit(players)) {
-      // Toast should be in component, not store
     return { success: false, error: 'SQUAD_FULL' };
     }
     
@@ -56,20 +58,19 @@ gk1: null,
       players: [...state.players, newPlayer]
     }));
     
-    return true;
+    return {success:true};
   },
 
 updatePlayer: (id: number, updatedPlayer: Player) => {
   const { players } = get();
   
-  // Jersey check (exclude current player)
   const jerseyTaken = players.some(p => 
     p.jerseyNumber === updatedPlayer.jerseyNumber && 
     p.id !== id
   );
   
   if (jerseyTaken) {
-    return false; // Failure
+    return false; 
   }
   
   set((state) => ({
@@ -78,17 +79,15 @@ updatePlayer: (id: number, updatedPlayer: Player) => {
     )
   }));
   
-  return true; // Success
+  return true; 
 },
 
 deletePlayer: (id) => {
   const { players, startingXI } = get();
   
-  // Check if player is in Starting XI
   const isInStartingXI = Object.values(startingXI).includes(id);
   
   if (isInStartingXI) {
-    // Remove from Starting XI first
     const updatedStartingXI = { ...startingXI };
     Object.keys(updatedStartingXI).forEach(key => {
       if (updatedStartingXI[key] === id) {
@@ -103,7 +102,6 @@ deletePlayer: (id) => {
     });
   }
   
-  // Then delete from players
   set({ players: players.filter(p => p.id !== id) });
 },
   setPlayers: (players) => set({ players }),

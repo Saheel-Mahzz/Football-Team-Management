@@ -24,14 +24,14 @@ export default function TeamHeader() {
 
     const handleAddPlayer = (data:Player)=>{
    const result = addPlayer(data);
-   console.log('i ma reuslt',result)
-if (result.success) {
+
+const { success, error } = result;
+
+if (success) {
   toast({ title: "Player added!" });
-} else {
-  toast({ 
-    title: getErrorMessage(result.error, result.params),
-    variant: "destructive" 
-  });
+  setIsDialogOpen(false);
+} else if (error) {
+  toast({ title: getErrorMessage(error) });
 }
     }
   
