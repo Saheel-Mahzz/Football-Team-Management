@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { toast } from '@/hooks/use-toast';
 import { useTeamStore } from '@/stores/useTeamStore';
+import { getErrorMessage } from '@/types/errorHandler';
 import { Player } from '@/types/players';
 import { useState } from 'react';
 import { getTeamStatus } from '../utils/getTeamStatus';
@@ -19,11 +21,16 @@ export default function TeamHeader() {
     const status = getTeamStatus(totalPlayers)
 
     const handleAddPlayer = (data:Player)=>{
-      const success = addPlayer(data)
-
-      if(success){
-        setIsDialogOpen(false)
-      }
+   const result = addPlayer(data);
+   console.log('i ma reuslt',result)
+if (result.success) {
+  toast({ title: "Player added!" });
+} else {
+  toast({ 
+    title: getErrorMessage(result.error, result.params),
+    variant: "destructive" 
+  });
+}
     }
   
   return (

@@ -23,11 +23,11 @@ export const useTeamStore = create<TeamStore>((set,get) => ({
     
     if (validateSquadLimit(players)) {
       // Toast should be in component, not store
-      return false;
+    return { success: false, error: 'SQUAD_FULL' };
     }
     
     if (validateJerseyNumber(players, player.jerseyNumber)) {
-      return false;
+      return { success: false, error: 'JERSEY_TAKEN' };
     }
     
     const newPlayer = { ...player, id: Date.now() };
