@@ -1,10 +1,13 @@
 // src/stores/useTeamStore.ts
+import { toast } from '@/hooks/use-toast';
 import { validateJerseyNumber, validateSquadLimit } from '@/pages/team/utils/teamRules';
 import { Player } from '@/types/players';
 import { create } from 'zustand';
 
 interface TeamStore {
   players: Player[];
+  startingXI:Record<string,number | null>,
+   setStartingXI: (slot: string, playerId: number | null) => void;
   addPlayer: (player: Player) => void;
   updatePlayer: (id: number, player: Player) => void;
   deletePlayer: (id: number) => void;
@@ -13,6 +16,23 @@ interface TeamStore {
 
 export const useTeamStore = create<TeamStore>((set,get) => ({
   players: [],
+  startingXI:{
+gk1: null,
+    def1: null,
+    def2: null,
+    def3: null,
+    def4: null,
+    mid1: null,
+    mid2: null,
+    mid3: null,
+    mid4: null,
+    fwd1: null,
+    fwd2: null,
+  },
+  setStartingXI: (slot: string, playerId: number | null) => 
+  set((state) => ({
+    startingXI: { ...state.startingXI, [slot]: playerId }
+  })),
   
 //   addPlayer: (player) => set((state) => ({
 //     players: [...state.players, player]
@@ -61,21 +81,30 @@ updatePlayer: (id: number, updatedPlayer: Player) => {
   return true; // Success
 },
 
-deletePlayer: (id: number) => {
-  const { players } = get();
-  const playerToDelete = players.find(p => p.id === id);
+deletePlayer: (id) => {
+  const { players, startingXI } = get();
   
-  if (!playerToDelete) {
-    return false;
+  // Check if player is in Starting XI
+  const isInStartingXI = Object.values(startingXI).includes(id);
+  
+  if (isInStartingXI) {
+    // Remove from Starting XI first
+    const updatedStartingXI = { ...startingXI };
+    Object.keys(updatedStartingXI).forEach(key => {
+      if (updatedStartingXI[key] === id) {
+        updatedStartingXI[key] = null;
+      }
+    });
+    
+    set({ startingXI: updatedStartingXI });
+    toast({ 
+      title: "Player removed from Starting XI", 
+      variant: "destructive" 
+    });
   }
   
-  // Add position minimums validation here if needed
-  
-  set((state) => ({
-    players: state.players.filter(p => p.id !== id)
-  }));
-  
-  return playerToDelete; // Return deleted player for toast message
+  // Then delete from players
+  set({ players: players.filter(p => p.id !== id) });
 },
   setPlayers: (players) => set({ players }),
 }));

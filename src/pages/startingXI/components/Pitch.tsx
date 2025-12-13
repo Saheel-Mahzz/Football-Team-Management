@@ -35,7 +35,8 @@ console.log('aaiblae forwrds',availableForwards)
             availablePlayers={availableForwards}
             // availablePlayers={forwards}
             selectedPlayerId={startingXI.fwd1}
-            onSelectPlayer={(id) => setStartingXI({...startingXI, fwd1: id})}
+            // onSelectPlayer={(id) => setStartingXI({...startingXI, fwd1: id})}
+            onSelectPlayer={(id) => setStartingXI('fwd1',id)}
           />
         </div>
         {/* <div className="col-start-3 row-start-1 flex items-center justify-center">
@@ -51,7 +52,8 @@ console.log('aaiblae forwrds',availableForwards)
             availablePlayers={availableForwards}
             // availablePlayers={forwards}
             selectedPlayerId={startingXI.fwd2}
-            onSelectPlayer={(id) => setStartingXI({...startingXI, fwd2: id})}
+            // onSelectPlayer={(id) => setStartingXI({...startingXI, fwd2: id})}
+            onSelectPlayer={(id) => setStartingXI('fwd2',id)}
           />
         </div>
 {[1, 2, 3, 4].map(i => (
@@ -61,18 +63,26 @@ console.log('aaiblae forwrds',availableForwards)
       slotNumber={i}
       availablePlayers={availableMidfielders}  // From props
       selectedPlayerId={startingXI[`mid${i}`]}  // From state
-      onSelectPlayer={(id) => setStartingXI({...startingXI, [`mid${i}`]: id})}
+      // onSelectPlayer={(id) => setStartingXI({...startingXI, [`mid${i}`]: id})}
+onSelectPlayer={(id) => setStartingXI(`mid${i}`, id)}
     />
   </div>
 ))}
         {[1, 2, 3, 4].map(i => (
           <div key={i} className={`col-start-${i} row-start-3 flex items-center justify-center`}>
-       <PositionSlot availablePlayers={availableDefenders} slotNumber={i} position="DEF" selectedPlayerId={startingXI[`def${i}`]} onSelectPlayer={(id) => setStartingXI({...startingXI,[`def${i}`]:id})}/>
+       <PositionSlot availablePlayers={availableDefenders} slotNumber={i} position="DEF" 
+       selectedPlayerId={startingXI[`def${i}`]}
+        // onSelectPlayer={(id) => setStartingXI({...startingXI,[`def${i}`]:id})}
+        onSelectPlayer={(id) => setStartingXI(`def${i}`, id)}
+        />
           </div>
         ))}
         
         <div className="col-start-2 col-span-2 row-start-4 flex items-center justify-center">
-       <PositionSlot availablePlayers={availableGoalkeepers} slotNumber={1} position="GK" selectedPlayerId={startingXI.gk1} onSelectPlayer={(id)=> setStartingXI({...startingXI,gk1:id})}/>
+       <PositionSlot availablePlayers={availableGoalkeepers} slotNumber={1} position="GK" selectedPlayerId={startingXI.gk1} 
+      //  onSelectPlayer={(id)=> setStartingXI({...startingXI,gk1:id})}
+      onSelectPlayer={(id) => setStartingXI(`gk1`, id)}
+       />
         </div>
         
       </div>
