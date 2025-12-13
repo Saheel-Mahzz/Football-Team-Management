@@ -8,25 +8,18 @@ import { getErrorMessage } from '@/types/errorHandler';
 import { Player } from '@/types/players';
 import { Users } from 'lucide-react';
 import { useState } from 'react';
-import { getTeamStatus } from '../utils/getTeamStatus';
+import { getPositionCount, getTeamStatusColor } from '../utils/teamStatus';
 import TeamForm from './TeamForm';
 
 export default function TeamHeader() {
   const {addPlayer,players} = useTeamStore()
   const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
-    const totalPlayers = players.length;
-    const gkCount = players.filter((p)=>p.position === 'GK').length
-    const defCount = players.filter((p)=> p.position === 'DEF').length
-    const forwardCount = players.filter((p)=>p.position === 'FWD').length
-    const midCount = players.filter((p)=> p.position === 'MID').length
-
-    const status = getTeamStatus(totalPlayers)
+  const {defender,goalKeeper,forward,mid,totalPlayers} = getPositionCount(players)
+  const status = getTeamStatusColor(totalPlayers)
 
     const handleAddPlayer = (data:Player)=>{
    const result = addPlayer(data);
-
 const { success, error } = result;
-
 if (success) {
   toast({ title: "Player added!" });
   setIsDialogOpen(false);
@@ -34,17 +27,11 @@ if (success) {
   toast({ title: getErrorMessage(error) });
 }
     }
-  
   return (
     <>
-     <div className="flex justify-between items-center mb-6">
-  
-  </div>
-
 <div className="flex justify-between items-center mb-6">
   <div>
     <h2 className="text-2xl font-semibold text-gray-800">Team Management</h2>
-    {/* Total Squad in header */}
 <div className="flex items-center gap-2 mt-2">
 <Badge className={`
   ${status.bgColor} ${status.textColor} border-0 
@@ -71,34 +58,32 @@ if (success) {
     </DialogContent>
     </Dialog>
 </div>
-
-{/* Now 4 position cards only */}
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
   <Card className="bg-blue-50 border-blue-200 p-4">
     <div className="text-sm text-blue-700">Goalkeepers</div>
-    <div className="text-2xl font-bold text-blue-800">{gkCount}
-      {gkCount < 1 && <span className='text-red-500 text-sm ml-2'>(Min:1)</span>}
+    <div className="text-2xl font-bold text-blue-800">{goalKeeper}
+      {goalKeeper < 1 && <span className='text-red-500 text-sm ml-2'>(Min:1)</span>}
     </div>
   </Card>
   
   <Card className="bg-green-50 border-green-200 p-4">
     <div className="text-sm text-green-700">Defenders</div>
-    <div className="text-2xl font-bold text-green-800">{defCount}
-      {defCount < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
+    <div className="text-2xl font-bold text-green-800">{defender}
+      {defender < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
     </div>
   </Card>
   
   <Card className="bg-yellow-50 border-yellow-200 p-4">
     <div className="text-sm text-yellow-700">Midfielders</div>
-    <div className="text-2xl font-bold text-yellow-800">{midCount}
-      {midCount < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
+    <div className="text-2xl font-bold text-yellow-800">{mid}
+      {mid < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
     </div>
   </Card>
   
   <Card className="bg-red-50 border-red-200 p-4">
     <div className="text-sm text-red-700">Forwards</div>
-    <div className="text-2xl font-bold text-red-800">{forwardCount}
-      {forwardCount < 2 && <span className='text-red-500 text-sm ml-2'>(Min:2)</span>}
+    <div className="text-2xl font-bold text-red-800">{forward}
+      {forward < 2 && <span className='text-red-500 text-sm ml-2'>(Min:2)</span>}
     </div>
   </Card>
 </div>

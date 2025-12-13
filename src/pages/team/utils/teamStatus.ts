@@ -1,4 +1,6 @@
-export const getTeamStatus = (count: number) => {
+import { Player } from "@/types/players";
+
+export const getTeamStatusColor = (count: number) => {
   switch (true) {
     case count >= 22:
       return {
@@ -32,3 +34,13 @@ export const getTeamStatus = (count: number) => {
       };
   }
 };
+
+export const getPositionCount = (players:Player[])=>{
+  return {
+    totalPlayers: players.length,
+    goalKeeper: players.filter(p => p.position === 'GK').length,
+    defender: players.filter(p => p.position === 'DEF').length,
+    mid: players.filter(p => p.position === 'MID').length,
+    forward: players.filter(p => p.position === 'FWD').length,
+  };
+}

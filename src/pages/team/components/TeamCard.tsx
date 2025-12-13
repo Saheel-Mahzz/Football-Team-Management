@@ -3,11 +3,18 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Player } from "@/types/players";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Edit, Trash2 } from "lucide-react";
 import TeamForm from "./TeamForm";
 
-const TeamCard = ({player,updatePlayer,deletePlayer}) => {
+interface TeamCardProps {
+  player: Player;
+  updatePlayer: (id: number, player: Player) => void;
+  deletePlayer: (id: number) => void;
+}
+
+const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
 
   return (
 
@@ -42,7 +49,8 @@ const TeamCard = ({player,updatePlayer,deletePlayer}) => {
 
     <CardFooter className="grid md:grid-cols-2 gap-2 border-t pt-4">
       <Dialog>
-        <DialogTrigger>          <Button 
+        <DialogTrigger> 
+           <Button 
               variant="outline" 
               size="sm" 
               className="gap-2 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 transition-colors w-full"
