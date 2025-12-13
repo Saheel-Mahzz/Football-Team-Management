@@ -17,9 +17,6 @@ interface TeamCardProps {
   updatePlayer: (id: number, player: Player) => ActionResult;
   deletePlayer: (id: number) => ActionResult;
 }
-
-
-
 const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
 
   const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)

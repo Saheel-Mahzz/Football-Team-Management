@@ -10,7 +10,14 @@ export const playerSchema = z.object({
     message:'Must be a whole number'
   }),
   age: z.coerce.number().min(15,'Min age 15').max(45,'Max age 45'),
-  avatarUrl: z.string().optional(),
+avatarUrl: z
+  .string()
+  .regex(
+    /^https?:\/\/.+\..+/,
+    "Must be a valid URL with domain"
+  )
+  .optional()
+  .or(z.literal('')),
   nationality: z.string().optional(),
 });
 

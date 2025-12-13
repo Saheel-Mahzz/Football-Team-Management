@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form
 } from "@/components/ui/form";
-import { POSITION_OPTIONS } from "@/constants/playersRoles";
+import { NATIONALITY_OPTIONS, POSITION_OPTIONS } from "@/constants/playersRoles";
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -69,6 +69,15 @@ const TeamForm = ({ initialData, onCancel,onSubmit }: PlayerFormProps) => {
           placeholder="15-45"
           type="number"
         />
+        
+        <FormSelect
+          control={form.control}
+          name="nationality"
+          label="Nationality *"
+          options={NATIONALITY_OPTIONS}
+          placeholder="Select position"
+        />
+
 
         <FormInput
           control={form.control}
