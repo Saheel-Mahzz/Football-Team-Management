@@ -1,14 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useTeamContext } from '@/hooks/useTeamContext';
+import { useTeamStore } from '@/stores/useTeamStore';
 import { Player } from '@/types/players';
 import { useState } from 'react';
 import { getTeamStatus } from '../utils/getTeamStatus';
 import TeamForm from './TeamForm';
 
 export default function TeamHeader() {
-  const {addPlayer,players} = useTeamContext()
+  // const {addPlayer,players} = useTeamContext()
+  const {addPlayer,players} = useTeamStore()
   const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
     const totalPlayers = players.length;
     const gkCount = players.filter((p)=>p.position === 'GK').length

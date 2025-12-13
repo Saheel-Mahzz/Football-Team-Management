@@ -1,4 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useTeamStore } from "@/stores/useTeamStore";
 import { useState } from "react";
 import PositionSlot from "./PositionSlot";
 
@@ -16,6 +17,10 @@ export function Pitch(){
   fwd1: null,    // Forward 1
   fwd2: null,    // Forward 2
 });
+
+// const {players} = useTeamContext()
+const {players} = useTeamStore()
+console.log('playesssssrs',players)
 
 
 const forwards = [
