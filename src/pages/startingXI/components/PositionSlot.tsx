@@ -1,8 +1,10 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
+import { useTeamStore } from "@/stores/useTeamStore";
+import { User } from "lucide-react";
 
 interface PositionSlotProps {
   position: 'GK' | 'DEF' | 'MID' | 'FWD';
-  slotNumber?: number; // For multiple slots of same position
+  slotNumber?: number; 
   availablePlayers: Array<{
     id: number;
     name: string;
@@ -12,17 +14,18 @@ interface PositionSlotProps {
   onSelectPlayer: (playerId: number ) => void;
 }
 
+
 export default function PositionSlot({
-  position,
-  slotNumber,
+  position = 'FWD',
   availablePlayers,
   selectedPlayerId,
-  onSelectPlayer
-}: PositionSlotProps) {
-  const selectedPlayer = availablePlayers.find(p => p.id === selectedPlayerId);
+  onSelectPlayer 
+}:PositionSlotProps) {
+  const {players} = useTeamStore()
+  const selectedPlayer = players.find(p => p.id === selectedPlayerId);
   
   return (
-    <div className="flex flex-col items-center justify-center gap-2">
+    <div className="flex flex-col items-center gap-2">
       <Select 
         value={selectedPlayerId?.toString() || ""}
         onValueChange={(value) => onSelectPlayer(Number(value))}
@@ -30,42 +33,61 @@ export default function PositionSlot({
         <SelectTrigger className={`
           w-24 h-24 rounded-full border-2 
           ${selectedPlayer 
-            ? 'bg-white/30 border-white' 
-            : 'bg-white/20 border-dashed border-white/40'
+            ? 'bg-white/30 border-white shadow-md' 
+            : 'bg-white/10 border-white/40 border-dashed'
           }
-          hover:bg-white/30 transition-colors
+          hover:bg-white/40 transition-colors
           flex flex-col items-center justify-center
         `}>
-          <SelectValue placeholder={
-            <div className="flex flex-col items-center">
-              <span className="font-bold text-lg">{position}</span>
-              {slotNumber && <span className="text-xs">#{slotNumber}</span>}
+          {selectedPlayer ? (
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
+                <User className="w-7 h-7 text-white" />
+              </div>
+              <span className="font-semibold text-sm text-gray/60 text-center px-1">
+                {selectedPlayer.name}
+              </span>
+              <span className="text-sm font-semibold text-gray/60">
+                #{selectedPlayer.jerseyNumber}
+              </span>
             </div>
-          } />
+          ) : (
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                <User className="w-6 h-6 text-white/60" />
+              </div>
+              <span className="font-bold text-sm text-white">
+                {position}
+              </span>
+            </div>
+          )}
         </SelectTrigger>
         
-        <SelectContent className="bg-gray-900 text-white border-gray-700">
-          {availablePlayers.map(player => (
-            <SelectItem 
-              key={player.id} 
-              value={player.id.toString()}
-              className="hover:bg-gray-800"
-            >
-              <div className="flex items-center  gap-2">
-                <span className="font-medium">{player.name}</span>
-                {/* <span className="text-gray-400">#{player.jerseyNumber}</span> */}
-              </div>
-            </SelectItem>
-          ))}
+        <SelectContent className="bg-gray-900 text-white border border-gray-700 rounded-md shadow-lg min-w-[180px]">
+          {availablePlayers?.length === 0 ? (
+            <div className="px-3 py-2 text-sm text-gray-400">
+              No {position} available
+            </div>
+          ) : (
+            availablePlayers.map(player => (
+              <SelectItem 
+                key={player.id} 
+                value={player.id.toString()}
+                className="hover:bg-gray-800"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm">{player.name}</span>
+                  <span className="text-xs text-gray-400">#{player.jerseyNumber}</span>
+                </div>
+              </SelectItem>
+            ))
+          )}
         </SelectContent>
       </Select>
       
-      {selectedPlayer && (
-        <div className="text-center text-sm">
-          <p className="font-medium truncate max-w-[80px]">{selectedPlayer.name}</p>
-          <p className="text-gray-600">#{selectedPlayer.jerseyNumber}</p>
-        </div>
-      )}
+      <span className="text-xs font-semibold text-white/80">
+        {position}
+      </span>
     </div>
   );
 }

@@ -1,32 +1,23 @@
-import { useTeamStore } from "@/stores/useTeamStore";
-import { useState } from "react";
+import { Player } from "@/types/players";
 import PositionSlot from "./PositionSlot";
 
-export function Pitch(){
-    const [startingXI, setStartingXI] = useState<Record<string,number | null>>({
-  gk1: null,     // Goalkeeper
-  def1: null,    // Defender 1
-  def2: null,    // Defender 2
-  def3: null,    // Defender 3  
-  def4: null,    // Defender 4
-  mid1: null,    // Midfielder 1
-  mid2: null,    // Midfielder 2
-  mid3: null,    // Midfielder 3
-  mid4: null,    // Midfielder 4
-  fwd1: null,    // Forward 1
-  fwd2: null,    // Forward 2
-});
+export function Pitch({startingXI,setStartingXI,players}:{players:Player[]}){
+
 
 // const {players} = useTeamContext()
-const {players} = useTeamStore()
 console.log('playesssssrs',players)
 const goalKeepers = players?.filter((p) => p.position === 'GK')
 const forwards = players?.filter((p)=> p.position === 'FWD')
 const midFielders = players?.filter((p)=> p.position === 'MID')
 const defenders = players?.filter((p)=> p.position === 'DEF')
 
+const selectedPlayerIds = Object.values(startingXI).filter(id => id !== undefined);
+const availableGoalkeepers = goalKeepers.filter(gk => !selectedPlayerIds.includes(gk.id));
+const availableForwards = forwards.filter(fwd => !selectedPlayerIds.includes(fwd.id));
+const availableMidfielders = midFielders.filter(mid => !selectedPlayerIds.includes(mid.id));
+const availableDefenders = defenders.filter(def => !selectedPlayerIds.includes(def.id));
 
-
+console.log('aaiblae forwrds',availableForwards)
 
   return (
     <div className="w-full aspect-[2/1] bg-green-600 rounded-xl border-4 border-white p-4 h-full">
@@ -41,7 +32,8 @@ const defenders = players?.filter((p)=> p.position === 'DEF')
           <PositionSlot 
             position="FWD"
             slotNumber={1}
-            availablePlayers={forwards}
+            availablePlayers={availableForwards}
+            // availablePlayers={forwards}
             selectedPlayerId={startingXI.fwd1}
             onSelectPlayer={(id) => setStartingXI({...startingXI, fwd1: id})}
           />
@@ -56,9 +48,10 @@ const defenders = players?.filter((p)=> p.position === 'DEF')
           <PositionSlot 
             position="FWD"
             slotNumber={2}
-            availablePlayers={forwards}
-            selectedPlayerId={startingXI.fwd1}
-            onSelectPlayer={(id) => setStartingXI({...startingXI, fwd1: id})}
+            availablePlayers={availableForwards}
+            // availablePlayers={forwards}
+            selectedPlayerId={startingXI.fwd2}
+            onSelectPlayer={(id) => setStartingXI({...startingXI, fwd2: id})}
           />
         </div>
 {[1, 2, 3, 4].map(i => (
@@ -66,7 +59,7 @@ const defenders = players?.filter((p)=> p.position === 'DEF')
     <PositionSlot
       position="MID"
       slotNumber={i}
-      availablePlayers={midFielders}  // From props
+      availablePlayers={availableMidfielders}  // From props
       selectedPlayerId={startingXI[`mid${i}`]}  // From state
       onSelectPlayer={(id) => setStartingXI({...startingXI, [`mid${i}`]: id})}
     />
@@ -74,12 +67,12 @@ const defenders = players?.filter((p)=> p.position === 'DEF')
 ))}
         {[1, 2, 3, 4].map(i => (
           <div key={i} className={`col-start-${i} row-start-3 flex items-center justify-center`}>
-       <PositionSlot availablePlayers={defenders} slotNumber={i} position="DEF" selectedPlayerId={startingXI[`def${i}`]} onSelectPlayer={(id) => setStartingXI({...startingXI,[`def${i}`]:id})}/>
+       <PositionSlot availablePlayers={availableDefenders} slotNumber={i} position="DEF" selectedPlayerId={startingXI[`def${i}`]} onSelectPlayer={(id) => setStartingXI({...startingXI,[`def${i}`]:id})}/>
           </div>
         ))}
         
         <div className="col-start-2 col-span-2 row-start-4 flex items-center justify-center">
-       <PositionSlot availablePlayers={goalKeepers} slotNumber={1} position="GK" selectedPlayerId={startingXI.gk1} onSelectPlayer={(id)=> setStartingXI({...startingXI,gk1:id})}/>
+       <PositionSlot availablePlayers={availableGoalkeepers} slotNumber={1} position="GK" selectedPlayerId={startingXI.gk1} onSelectPlayer={(id)=> setStartingXI({...startingXI,gk1:id})}/>
         </div>
         
       </div>
