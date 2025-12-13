@@ -1,9 +1,11 @@
+import { useTeamContext } from "@/hooks/useTeamContext"
 import TeamCard from "./TeamCard"
 
 // const players =[]
 
 
-export default function TeamGrid({players,updatePlayer,deletePlayer}) {
+export default function TeamGrid() {
+  const {players,updatePlayer,deletePlayer} = useTeamContext()
 
   console.log('total players',players)
   if(players.length === 0){
