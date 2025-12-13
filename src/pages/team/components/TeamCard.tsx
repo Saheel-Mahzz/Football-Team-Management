@@ -1,5 +1,7 @@
 // PlayerCard.tsx
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -7,7 +9,7 @@ import { ActionResult } from "@/stores/useTeamStore";
 import { getErrorMessage } from "@/types/errorHandler";
 import { Player } from "@/types/players";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, User } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import TeamForm from "./TeamForm";
@@ -50,32 +52,43 @@ if (success) {
 
 
   <Card className="border shadow-sm hover:shadow-md transition-shadow w-full">
-    <CardContent className="pt-6 ">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            {player.name}
-          </h3>
-          <div className="px-3 py-1 bg-gray-100 text-gray-700 rounded-md text-sm inline-block">
-            #{player.jerseyNumber}
-          </div>
-        </div>
-        <div className="px-3 py-1 bg-blue-50 text-blue-700 rounded-md text-sm font-medium border border-blue-200">
+<CardContent className="pt-6">
+  <div className="flex gap-4 items-start">
+    {/* Avatar */}
+    <Avatar className="w-16 h-16 border-2 border-gray-200 shadow-sm">
+      <AvatarImage 
+        src={player.avatarUrl} 
+        alt={player.name}
+        className="object-cover"
+      />
+      <AvatarFallback className="bg-blue-50 text-blue-600">
+        <User className="w-7 h-7" />
+      </AvatarFallback>
+    </Avatar>
+    
+    <div className="flex-1">
+      <div className="flex items-start justify-between gap-2 mb-4">
+        <h3 className="text-lg font-semibold text-gray-900">
+          {player.name}
+        </h3>
+        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
           {player.position}
-        </div>
+        </Badge>
       </div>
       
-      <div className="space-y-3 text-gray-600">
-        <div className="flex items-center">
-          <span className="w-24 font-medium">Age:</span>
-          <span>{player.age}</span>
-        </div>
-        <div className="flex items-center">
-          <span className="w-24 font-medium">Nationality:</span>
-          <span>{player.nationality}</span>
+      <div className="flex items-center gap-3 w-full">
+        <Badge variant="secondary" className="font-bold text-base px-3 py-1">
+          {player.jerseyNumber}
+        </Badge>
+        <div className="flex items-center gap-2 text-base">
+          <span className="text-gray-500">Age:</span>
+          <span className="font-bold text-gray-900">{player.age}</span>
         </div>
       </div>
-    </CardContent>
+    </div>
+  </div>
+</CardContent>
+
 
     <CardFooter className="grid md:grid-cols-2 gap-2 border-t pt-4">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
