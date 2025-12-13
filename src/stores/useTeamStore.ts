@@ -1,13 +1,13 @@
 // src/stores/useTeamStore.ts
-import { toast } from '@/hooks/use-toast';
 import { validateJerseyNumber, validateSquadLimit } from '@/pages/team/utils/teamRules';
 import { Player } from '@/types/players';
 import { create } from 'zustand';
 
-interface ActionResult {
+export interface ActionResult {
   success:boolean,
   error?:string,
-  params?:string
+  params?:string,
+  isInStartingXI?:boolean
 }
 
 interface TeamStore {
@@ -16,7 +16,7 @@ interface TeamStore {
    setStartingXI: (slot: string, playerId: number | null) => void;
   addPlayer: (player: Player) => ActionResult;
   updatePlayer: (id: number, player: Player) => void;
-  deletePlayer: (id: number) => void;
+  deletePlayer: (id: number) => ActionResult;
   setPlayers: (players: Player[]) => void;
 }
 
@@ -82,7 +82,7 @@ updatePlayer: (id: number, updatedPlayer: Player) => {
   return true; 
 },
 
-deletePlayer: (id) => {
+deletePlayer: (id: number) => {
   const { players, startingXI } = get();
   
   const isInStartingXI = Object.values(startingXI).includes(id);
@@ -96,13 +96,15 @@ deletePlayer: (id) => {
     });
     
     set({ startingXI: updatedStartingXI });
-    toast({ 
-      title: "Player removed from Starting XI", 
-      variant: "destructive" 
-    });
   }
   
-  set({ players: players.filter(p => p.id !== id) });
+  const updatedPlayers = players.filter(p => p.id !== id);
+  set({ players: updatedPlayers });
+  
+  return { 
+    success: true,
+    isInStartingXI 
+  };
 },
   setPlayers: (players) => set({ players }),
 }));

@@ -21,9 +21,7 @@ export default function TeamHeader() {
    const result = addPlayer(data);
 const { success, error } = result;
 if (success) {
-    toast.success("Player added Successfully!",{
-        className: "bg-green-500 text-white"
-    });
+    toast.success("Player added Successfully!");
   setIsDialogOpen(false);
 } else if (error) {
   toast.error(getErrorMessage(error))

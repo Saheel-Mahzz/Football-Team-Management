@@ -3,19 +3,37 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { ActionResult } from "@/stores/useTeamStore";
 import { Player } from "@/types/players";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Edit, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import TeamForm from "./TeamForm";
 
 interface TeamCardProps {
   player: Player;
   updatePlayer: (id: number, player: Player) => void;
-  deletePlayer: (id: number) => void;
+  deletePlayer: (id: number) => ActionResult;
 }
+
+
 
 const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
 
+  const showDeleteToast = (wasInStartingXI: boolean) => {
+  if (wasInStartingXI) {
+    toast.warning("Player was in Starting XI! Removed and deleted.");
+  } else {
+    toast.success("Player deleted!");
+  }
+};
+  const handleDeletePlayer = (id: number) => {
+  const result = deletePlayer(id);
+  
+  if (result?.success) {
+    showDeleteToast(result.isInStartingXI as boolean);
+  }
+};
   return (
 
 
@@ -86,7 +104,7 @@ const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction 
                 className="bg-red-600 hover:bg-red-700"
-              onClick={()=>deletePlayer(player?.id)}
+              onClick={()=>handleDeletePlayer(player?.id)}
 
               >
                 Delete Player
