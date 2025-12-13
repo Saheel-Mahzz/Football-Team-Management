@@ -2,12 +2,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { toast } from '@/hooks/use-toast';
 import { useTeamStore } from '@/stores/useTeamStore';
 import { getErrorMessage } from '@/types/errorHandler';
 import { Player } from '@/types/players';
 import { Users } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { getPositionCount, getTeamStatusColor } from '../utils/teamStatus';
 import TeamForm from './TeamForm';
 
@@ -21,10 +21,12 @@ export default function TeamHeader() {
    const result = addPlayer(data);
 const { success, error } = result;
 if (success) {
-  toast({ title: "Player added!" });
+    toast.success("Player added Successfully!",{
+        className: "bg-green-500 text-white"
+    });
   setIsDialogOpen(false);
 } else if (error) {
-  toast({ title: getErrorMessage(error) });
+  toast.error(getErrorMessage(error))
 }
     }
   return (
