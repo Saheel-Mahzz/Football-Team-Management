@@ -1,12 +1,12 @@
 // src/stores/useTeamStore.ts
 import { validateJerseyNumber, validateSquadLimit } from '@/pages/team/utils/teamRules';
-import { Player } from '@/types/players';
+import { Player, PlayerErrorCode } from '@/types/players';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface ActionResult {
   success:boolean,
-  error?:string,
+  error?:PlayerErrorCode,
   params?:string,
   isInStartingXI?:boolean
 }

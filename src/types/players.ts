@@ -1,3 +1,5 @@
+import { PLAYER_ERRORS } from "@/constants/errors";
+
 export type Position = 'GK' | 'DEF' | 'MID' | 'FWD'
 
 export interface Player{
@@ -10,3 +12,4 @@ export interface Player{
     nationality?:string
 }
 
+export type PlayerErrorCode = keyof typeof PLAYER_ERRORS;
