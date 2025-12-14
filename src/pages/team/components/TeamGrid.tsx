@@ -25,7 +25,7 @@ export default function TeamGrid() {
     <div>
       <div className="grid md:grid-cols-3 gap-2 mb-4">
         {paginatedPlayers.map(player => (
-          <TeamCard 
+          <TeamCard
             key={player.id}
             player={player}
             updatePlayer={updatePlayer}
