@@ -7,28 +7,27 @@ import { Player } from "@/types/players";
 import { AlertCircle, RefreshCcw, Users } from "lucide-react";
 
 export default function SubstituteBench({ players }: { players: Player[] }) {
-  const isOverCapacity = players.length > 11;
-  const isFirstVisit = players.length > 11; 
+const isSquadOverCapacity = players.length > 11;
   
   return (
     <Card className="border-2 border-gray-300 bg-gradient-to-b from-gray-50 to-gray-100">
-      <CardHeader className={`${isOverCapacity ? 'bg-gradient-to-r from-orange-600 to-orange-800' : 'bg-gradient-to-r from-blue-600 to-blue-800'} text-white`}>
+      <CardHeader className={`${isSquadOverCapacity ? 'bg-gradient-to-r from-orange-600 to-orange-800' : 'bg-gradient-to-r from-blue-600 to-blue-800'} text-white`}>
         <CardTitle className="flex items-center gap-2">
           <Users className="h-5 w-5" />
           Substitutes Bench
-          <Badge variant="secondary" className={`ml-2 ${isOverCapacity ? 'bg-orange-100 text-orange-800' : 'bg-white text-blue-800'}`}>
+          <Badge variant="secondary" className={`ml-2 ${isSquadOverCapacity ? 'bg-orange-100 text-orange-800' : 'bg-white text-blue-800'}`}>
             {players.length}/11
           </Badge>
         </CardTitle>
         <CardDescription className="text-blue-100">
-          {isFirstVisit 
+          {isSquadOverCapacity
             ? "Select 11 players for Starting XI first" 
             : "Players ready to replace starting XI"}
         </CardDescription>
       </CardHeader>
       
       <CardContent className="p-4">
-        {isFirstVisit ? (
+        {isSquadOverCapacity ? (
           <div className="text-center p-6 space-y-4">
             <Users className="h-16 w-16 mx-auto text-gray-400" />
             <div>
@@ -76,7 +75,7 @@ export default function SubstituteBench({ players }: { players: Player[] }) {
           </div>
         )}
         
-        {isOverCapacity && (
+        {isSquadOverCapacity && (
           <Alert className="mt-4 bg-orange-50 border-orange-200">
             <AlertCircle className="h-4 w-4 text-orange-600" />
             <AlertDescription className="text-orange-700">
