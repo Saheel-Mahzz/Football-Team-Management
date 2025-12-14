@@ -10,7 +10,7 @@ export default function Team() {
 <div className="flex flex-col w-full max-w-4xl mx-auto bg-white rounded-xl shadow-2xl border border-gray-200 p-6">
 <TeamHeader />
   <TeamGrid />
-  <Button onClick={()=>navigate(XI_TEAM_ROUTE)}>Starting	XI	Management</Button>
+  <Button onClick={()=>navigate(XI_TEAM_ROUTE)} className="my-2">Starting	XI	Management</Button>
 </div>
   )
 }

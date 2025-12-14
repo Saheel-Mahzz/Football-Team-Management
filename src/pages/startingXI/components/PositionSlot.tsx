@@ -70,7 +70,7 @@ export default function PositionSlot({
         
         <SelectContent className="bg-slate-300 text-white border border-gray-700 rounded-lg shadow-lg min-w-[180px]">
           {availablePlayers?.length === 0 ? (
-            <div className="px-3 py-2 text-sm text-gray-400">
+            <div className="px-3 py-2 text-sm text-gray-700">
               No {position} available
             </div>
           ) : (
