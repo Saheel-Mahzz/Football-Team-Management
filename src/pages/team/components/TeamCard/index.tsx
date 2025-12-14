@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { ActionResult } from "@/stores/useTeamStore";
 import { Player } from "@/types/players";
 import { User } from "lucide-react";
+import { getPositionColor } from "../../utils/teamStatus";
 import TeamCardActions from "./components/TeamCardActions";
 
 interface TeamCardProps {
@@ -13,7 +14,7 @@ interface TeamCardProps {
   deletePlayer: (id: number) => ActionResult;
 }
 const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
-
+const color = getPositionColor(player?.position);
   return (
   <Card className="border shadow-sm hover:shadow-md transition-shadow w-full">
 <CardContent className="pt-6">
@@ -34,7 +35,7 @@ const TeamCard = ({player,updatePlayer,deletePlayer}:TeamCardProps) => {
         <h3 className="text-lg font-semibold text-gray-900">
           {player.name}
         </h3>
-        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+        <Badge variant="outline" className={`${color?.bg} ${color?.text} ${color?.border} `}>
           {player.position}
         </Badge>
       </div>

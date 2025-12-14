@@ -1,6 +1,6 @@
 import { Player } from "@/types/players";
 
-export const getTeamStatusColor = (count: number) => {
+export const getTeamStatusBadeColor = (count: number) => {
   switch (true) {
     case count >= 22:
       return {
@@ -44,3 +44,13 @@ export const getPositionCount = (players:Player[])=>{
     forward: players.filter(p => p.position === 'FWD').length,
   };
 }
+
+export const getPositionColor = (position: string) => {
+  const colors = {
+    GK: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700' },
+    DEF: { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-700' },
+    MID: { bg: 'bg-yellow-50', border: 'border-yellow-200', text: 'text-yellow-700' },
+    FWD: { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-700' },
+  };
+  return colors[position as keyof typeof colors] || colors.GK;
+};

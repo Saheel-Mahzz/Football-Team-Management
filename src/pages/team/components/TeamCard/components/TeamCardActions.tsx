@@ -55,7 +55,7 @@ export default function TeamCardActions({deletePlayer,player,updatePlayer}:TeamC
             </Button>
       </DialogTrigger>
 <DialogContent>
-  <TeamForm initialData={player} onSubmit={(data)=>handleUpdatePlayer(player.id,data)}   onCancel={() => setIsDialogOpen(false)}/>
+  <TeamForm initialData={player} onSubmit={(data)=>handleUpdatePlayer(player.id,data as Player)}   onCancel={() => setIsDialogOpen(false)}/>
 </DialogContent>
       </Dialog>
    <AlertDialog>

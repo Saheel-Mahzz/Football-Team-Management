@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { getErrorMessage } from '@/pages/team/utils/errorHandler';
@@ -9,14 +8,15 @@ import { Player } from '@/types/players';
 import { CircleAlert, Users } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { getPositionCount, getTeamStatusColor } from '../utils/teamStatus';
-import TeamForm from './TeamForm';
+import { getPositionCount, getTeamStatusBadeColor } from '../../utils/teamStatus';
+import TeamForm from '../TeamForm';
+import TeamPositionCountCard from './components/TeamPositionCountCard';
 
 export default function TeamHeader() {
   const {addPlayer,players} = useTeamStore()
   const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
-  const {defender,goalKeeper,forward,mid,totalPlayers} = getPositionCount(players)
-  const status = getTeamStatusColor(totalPlayers)
+  const {totalPlayers} = getPositionCount(players)
+  const status = getTeamStatusBadeColor(totalPlayers)
   const isSquadFull = totalPlayers>=22
 
     const handleAddPlayer = (data:Player)=>{
@@ -45,8 +45,6 @@ if (success) {
   <span className="text-gray-600">/22</span>
   <span className="font-normal">Players</span>
 </Badge>
-  
-
 </div>
   </div>
     <TooltipProvider>
@@ -79,35 +77,7 @@ if (success) {
       </Dialog>
     </TooltipProvider>
 </div>
-<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-  <Card className="bg-blue-50 border-blue-200 p-4">
-    <div className="text-sm text-blue-700">Goalkeepers</div>
-    <div className="text-2xl font-bold text-blue-800">{goalKeeper}
-      {goalKeeper < 1 && <span className='text-red-500 text-sm ml-2'>(Min:1)</span>}
-    </div>
-  </Card>
-  
-  <Card className="bg-green-50 border-green-200 p-4">
-    <div className="text-sm text-green-700">Defenders</div>
-    <div className="text-2xl font-bold text-green-800">{defender}
-      {defender < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
-    </div>
-  </Card>
-  
-  <Card className="bg-yellow-50 border-yellow-200 p-4">
-    <div className="text-sm text-yellow-700">Midfielders</div>
-    <div className="text-2xl font-bold text-yellow-800">{mid}
-      {mid < 4 && <span className='text-red-500 text-sm ml-2'>(Min:4)</span>}
-    </div>
-  </Card>
-  
-  <Card className="bg-red-50 border-red-200 p-4">
-    <div className="text-sm text-red-700">Forwards</div>
-    <div className="text-2xl font-bold text-red-800">{forward}
-      {forward < 2 && <span className='text-red-500 text-sm ml-2'>(Min:2)</span>}
-    </div>
-  </Card>
-</div>
+<TeamPositionCountCard players={players}/>
 </>
   )
 }
