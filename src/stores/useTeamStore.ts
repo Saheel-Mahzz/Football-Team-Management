@@ -2,6 +2,7 @@
 import { validateJerseyNumber, validateSquadLimit } from '@/pages/team/utils/teamRules';
 import { Player } from '@/types/players';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface ActionResult {
   success:boolean,
@@ -20,86 +21,92 @@ interface TeamStore {
   setPlayers: (players: Player[]) => void;
 }
 
-export const useTeamStore = create<TeamStore>((set,get) => ({
-  players: [],
-  startingXI:{
-gk1: null,
-    def1: null,
-    def2: null,
-    def3: null,
-    def4: null,
-    mid1: null,
-    mid2: null,
-    mid3: null,
-    mid4: null,
-    fwd1: null,
-    fwd2: null,
-  },
-  setStartingXI: (slot: string, playerId: number | null) => 
-  set((state) => ({
-    startingXI: { ...state.startingXI, [slot]: playerId }
-  })),
-  
+export const useTeamStore = create<TeamStore>()(
+  persist(
+    (set, get) => ({
+      players: [],
+      startingXI: {
+        gk1: null,
+        def1: null,
+        def2: null,
+        def3: null,
+        def4: null,
+        mid1: null,
+        mid2: null,
+        mid3: null,
+        mid4: null,
+        fwd1: null,
+        fwd2: null,
+      },
+      setStartingXI: (slot: string, playerId: number | null) =>
+        set((state) => ({
+          startingXI: { ...state.startingXI, [slot]: playerId },
+        })),
 
       addPlayer: (player: Player) => {
-    const { players } = get();
-    
-    if (validateSquadLimit(players)) {
-    return { success: false, error: 'SQUAD_FULL' };
+        const { players } = get();
+
+        if (validateSquadLimit(players)) {
+          return { success: false, error: 'SQUAD_FULL' };
+        }
+
+        if (validateJerseyNumber(players, player.jerseyNumber)) {
+          return { success: false, error: 'JERSEY_TAKEN' };
+        }
+
+        const newPlayer = { ...player, id: Date.now() };
+
+        set((state) => ({
+          players: [...state.players, newPlayer],
+        }));
+
+        return { success: true };
+      },
+
+      updatePlayer: (id: number, updatedPlayer: Player) => {
+        const { players } = get();
+
+        if (validateJerseyNumber(players, updatedPlayer?.jerseyNumber, id)) {
+          return { success: false, error: 'JERSEY_TAKEN' };
+        }
+
+        set((state) => ({
+          players: state.players.map((p) =>
+            p.id === id ? { ...updatedPlayer, id } : p
+          ),
+        }));
+
+        return { success: true };
+      },
+
+      deletePlayer: (id: number) => {
+        const { players, startingXI } = get();
+
+        const isInStartingXI = Object.values(startingXI).includes(id);
+
+        if (isInStartingXI) {
+          const updatedStartingXI = { ...startingXI };
+          Object.keys(updatedStartingXI).forEach((key) => {
+            if (updatedStartingXI[key] === id) {
+              updatedStartingXI[key] = null;
+            }
+          });
+
+          set({ startingXI: updatedStartingXI });
+        }
+
+        const updatedPlayers = players.filter((p) => p.id !== id);
+        set({ players: updatedPlayers });
+
+        return {
+          success: true,
+          isInStartingXI,
+        };
+      },
+      setPlayers: (players) => set({ players }),
+    }),
+    {
+      name: 'team-storage', // localStorage key
     }
-    
-    if (validateJerseyNumber(players, player.jerseyNumber)) {
-      return { success: false, error: 'JERSEY_TAKEN' };
-    }
-    
-    const newPlayer = { ...player, id: Date.now() };
-    
-    set((state) => ({
-      players: [...state.players, newPlayer]
-    }));
-    
-    return {success:true};
-  },
-
-updatePlayer: (id: number, updatedPlayer: Player) => {
-  const { players } = get();
-
-  if (validateJerseyNumber(players,updatedPlayer?.jerseyNumber,id)) {
-      return { success: false, error: 'JERSEY_TAKEN' };
-  }
-  
-  set((state) => ({
-    players: state.players.map(p => 
-      p.id === id ? { ...updatedPlayer, id } : p
-    )
-  }));
-  
-  return {success:true}; 
-},
-
-deletePlayer: (id: number) => {
-  const { players, startingXI } = get();
-  
-  const isInStartingXI = Object.values(startingXI).includes(id);
-  
-  if (isInStartingXI) {
-    const updatedStartingXI = { ...startingXI };
-    Object.keys(updatedStartingXI).forEach(key => {
-      if (updatedStartingXI[key] === id) {
-        updatedStartingXI[key] = null;
-      }
-    });
-    
-    set({ startingXI: updatedStartingXI });
-  }
-  
-  const updatedPlayers = players.filter(p => p.id !== id);
-  set({ players: updatedPlayers });
-  
-  return { 
-    success: true,
-    isInStartingXI 
-  };
-},
-  setPlayers: (players) => set({ players }),
-}));
+  )
+);

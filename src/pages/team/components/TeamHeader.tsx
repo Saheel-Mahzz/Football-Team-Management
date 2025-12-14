@@ -1,11 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTeamStore } from '@/stores/useTeamStore';
 import { getErrorMessage } from '@/types/errorHandler';
 import { Player } from '@/types/players';
-import { Users } from 'lucide-react';
+import { CircleAlert, Users } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { getPositionCount, getTeamStatusColor } from '../utils/teamStatus';
@@ -16,6 +17,7 @@ export default function TeamHeader() {
   const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
   const {defender,goalKeeper,forward,mid,totalPlayers} = getPositionCount(players)
   const status = getTeamStatusColor(totalPlayers)
+  const isSquadFull = totalPlayers>=22
 
     const handleAddPlayer = (data:Player)=>{
    const result = addPlayer(data);
@@ -47,16 +49,35 @@ if (success) {
 
 </div>
   </div>
-     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger>
-    <Button className="bg-blue-600 hover:bg-blue-700">
-      Add Player
-    </Button>
-    </DialogTrigger>
-    <DialogContent>
-        <TeamForm onSubmit={handleAddPlayer} />
-    </DialogContent>
-    </Dialog>
+    <TooltipProvider>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Tooltip delayDuration={200}>
+          <TooltipTrigger asChild>
+            <div className="inline-block">
+              <Button
+                className={` ${isSquadFull ?'cursor-none' : 'cursor-pointer'}`}
+                disabled={isSquadFull}
+                onClick={() => !isSquadFull && setIsDialogOpen(true)}
+              >
+                Add Player
+              </Button>
+            </div>
+          </TooltipTrigger>
+          {isSquadFull && (
+            <TooltipContent side="top" className="max-w-xs">
+              <p className="font-medium flex gap-2 text-red-600">
+                <span> <CircleAlert width={20} height={20} /></span>Squad Full!</p>
+              <p className="text-sm text-gray-600">
+                Maximum 22 players allowed. Remove some players before adding new ones.
+              </p>
+            </TooltipContent>
+          )}
+        </Tooltip>
+        <DialogContent>
+          <TeamForm onSubmit={handleAddPlayer} />
+        </DialogContent>
+      </Dialog>
+    </TooltipProvider>
 </div>
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
   <Card className="bg-blue-50 border-blue-200 p-4">
