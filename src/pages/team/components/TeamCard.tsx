@@ -104,7 +104,7 @@ if (success) {
       </DialogTrigger>
 
 <DialogContent>
-  <TeamForm initialData={player} onSubmit={(data)=>handleUpdatePlayer(player.id,data)}/>
+  <TeamForm initialData={player} onSubmit={(data)=>handleUpdatePlayer(player.id,data)}   onCancel={() => setIsDialogOpen(false)}/>
 </DialogContent>
       </Dialog>
      <AlertDialog>

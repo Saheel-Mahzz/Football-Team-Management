@@ -74,7 +74,7 @@ if (success) {
           )}
         </Tooltip>
         <DialogContent>
-          <TeamForm onSubmit={handleAddPlayer} />
+          <TeamForm onSubmit={handleAddPlayer}   onCancel={() => setIsDialogOpen(false)} />
         </DialogContent>
       </Dialog>
     </TooltipProvider>
