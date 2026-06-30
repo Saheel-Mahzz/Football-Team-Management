@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Form
@@ -6,7 +5,7 @@ import {
 import { NATIONALITY_OPTIONS, POSITION_OPTIONS } from "@/constants/playersRoles";
 import { playerSchema, type PlayerFormData } from "@/validations/players.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { FormInput } from "../../../components/form/formInput";
 import { FormSelect } from "../../../components/form/formSelect";
 
@@ -16,31 +15,25 @@ interface PlayerFormProps {
   onCancel?: () => void;
 }
 
-const TeamForm = ({ initialData, onCancel,onSubmit }: PlayerFormProps) => {
+const TeamForm = ({ initialData, onCancel, onSubmit }: PlayerFormProps) => {
   const form = useForm<PlayerFormData>({
-    //@ts-expect-error - fix later
-    resolver: zodResolver(playerSchema),
-    //@ts-expect-error - ts being strict - handling for proper validation in UI
-    defaultValues:  initialData ||{
-      name:'',
-      age:15,
-      avatarUrl:'',
-      jerseyNumber:1,
-      nationality:'',
-      position:''
-    } ,
-    
+    resolver: zodResolver(playerSchema) as Resolver<PlayerFormData>,
+    defaultValues: initialData || {
+      name: '',
+      age: 15,
+      avatarUrl: '',
+      jerseyNumber: 1,
+      nationality: '',
+      position: undefined,
+    },
   });
 
   const handleSubmit = (data: PlayerFormData) => {
     onSubmit?.(data);
   };
 
-
-
   return (
     <Form {...form}>
-      
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormInput
           control={form.control}
@@ -72,7 +65,7 @@ const TeamForm = ({ initialData, onCancel,onSubmit }: PlayerFormProps) => {
           placeholder="15-45"
           type="number"
         />
-        
+
         <FormSelect
           control={form.control}
           name="nationality"
@@ -80,7 +73,6 @@ const TeamForm = ({ initialData, onCancel,onSubmit }: PlayerFormProps) => {
           options={NATIONALITY_OPTIONS}
           placeholder="Select position"
         />
-
 
         <FormInput
           control={form.control}
