@@ -1,7 +1,5 @@
-import SelectInputField from "./form-fields/selectInputField"
-import TextInputField from "./form-fields/textInputField"
 
-type Types = 'text' | 'select' | 'password' | 'email'
+
 
 interface Options {
     label: string,
@@ -24,18 +22,3 @@ export interface SelectProps extends BaseProps {
 
 export type FormElementProps = TextProps | SelectProps
 
-
-export default function FormElements(props: FormElementProps) {
-    const { type } = props
-
-    
-    const SelectedField = mappingComponent[type]
-    return <SelectedField {...props} />
-}
-
-const mappingComponent: Record<Types, React.ComponentType<any>> = {
-    text: TextInputField,
-    select: SelectInputField,
-    password: TextInputField,
-    email: TextInputField
-}
