@@ -57,7 +57,7 @@ if (success) {
                 disabled={isSquadFull}
                 onClick={() => !isSquadFull && setIsDialogOpen(true)}
               >
-                Add Player
+                Add Players
               </Button>
             </div>
           </TooltipTrigger>
