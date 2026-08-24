@@ -17,8 +17,8 @@
 #       - name: Docker Hub Login
 #         uses  
 
-nmae: Simple Docker UI
- on:
+name: Simple Docker UI
+on:
   push:
     branches: ["main"]
 
