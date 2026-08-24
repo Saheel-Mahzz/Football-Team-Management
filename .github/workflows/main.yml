@@ -1,15 +1,43 @@
-name: Simple Docker CI
+# name: Simple Docker CI
 
-on:
+# on:
+#   push:
+#     branches: ["main"]
+
+# jobs:
+#   build-test:
+#     runs-on: ubuntu-latest    
+#     steps:
+#       - name: Code download garney(Checkout)
+#         uses: actions/checkout@v4
+
+#       - name: Docker Image Build garney
+#         run: docker build -t football-team-app .
+
+#       - name: Docker Hub Login
+#         uses  
+
+nmae: Simple Docker UI
+ on:
   push:
     branches: ["main"]
 
 jobs:
-  build-test:
-    runs-on: ubuntu-latest    
+  build-and-push:
+    runs-on: ubuntu-latest
     steps:
-      - name: Code download garney(Checkout)
-        uses: actions/checkout@v4
+    - name: Code Chekout
+      uses: actions/checkout@v4
 
-      - name: Docker Image Build garney
-        run: docker build -t football-team-app .
+    - name: Docker Hub Login
+      uses: docker/login-action@v3
+      with:
+      username: ${{ secrets.DOCKERHUB_USERNAME}}
+      password: ${{secrets.DOCKERHUB_TOKEN}}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/football-team-app:latest
