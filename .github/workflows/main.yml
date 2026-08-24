@@ -1,0 +1,15 @@
+name: Simple Docker CI
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Code download garney(Checkout)
+        uses: actions/checkout@v4
+
+      - name: Docker Image Build garney
+        run: docker build -t football-team-app .
