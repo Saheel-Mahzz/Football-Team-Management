@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import StartingXI, { XI_TEAM_ROUTE } from "./pages/startingXI";
 import Tasks, { TASK_ROUTE } from "./pages/TaskList";
 import Team from "./pages/team";
+import Test, { TEST_ROUTE } from "./test";
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
     {
         path:TASK_ROUTE,
         element:<Tasks/>
+    },
+    {
+        path:TEST_ROUTE,
+        element:<Test/>
     }
 ])
 
