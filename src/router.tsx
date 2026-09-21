@@ -3,6 +3,7 @@ import StartingXI, { XI_TEAM_ROUTE } from "./pages/startingXI";
 import Tasks, { TASK_ROUTE } from "./pages/TaskList";
 import Team from "./pages/team";
 import Test, { TEST_ROUTE } from "./test";
+import Testing, { TESTING_ROUTE } from "./testing";
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     {
         path:TEST_ROUTE,
         element:<Test/>
+    },
+    {
+        path:TESTING_ROUTE,
+        element:<Testing/>
     }
 ])
 

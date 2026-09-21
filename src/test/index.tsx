@@ -1,3 +1,4 @@
+import FormElements1 from "@/components/form/formElements1"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 
@@ -28,6 +29,7 @@ console.log('new word',newArray.join(' '))
 
   return (
     <div>
+      <FormElements1 type="text"  id="name" name="name"  placeholder="Enter name"/>
       <input
         type="text"
         value={query}
