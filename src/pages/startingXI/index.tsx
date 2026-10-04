@@ -27,53 +27,57 @@ export default function StartingXI() {
   };
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            size="icon"
-            onClick={() => navigate('/')}
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Starting XI</h1>
-            <p className="text-sm text-gray-600">
-              {selectedIds.length}/11 players selected
-            </p>
-          </div>
-        </div>
-        
-        <Button 
-          onClick={handleSaveFormation}
-          disabled={!isXIComplete}
-          className={!isXIComplete ? 'opacity-50 cursor-not-allowed' : ''}
-        >
-          Save Formation
-        </Button>
-      </div>
-
-      {!isXIComplete && selectedIds.length > 0 && (
-        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-          <p className="text-sm text-amber-800">
-            ⚠️ Select {11 - selectedIds.length} more player(s) to complete your Starting XI
-          </p>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3">
-          <Pitch 
-            startingXI={startingXI}
-            setStartingXI={setStartingXI}
-            players={players}
-          />
-        </div>
-        <div className="lg:col-span-1">
-          <SubstituteBench players={substitutes} />
-        </div>
+<div className="min-h-screen p-4 sm:p-6">
+  {/* Header Section */}
+  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+    <div className="flex items-center gap-3">
+      <Button 
+        variant="outline" 
+        size="icon"
+        onClick={() => navigate('/')}
+        className="shrink-0"
+      >
+        <ArrowLeft className="h-4 w-4" />
+      </Button>
+      <div>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Starting XI</h1>
+        <p className="text-xs sm:text-sm text-gray-600">
+          {selectedIds.length}/11 players selected
+        </p>
       </div>
     </div>
+    
+    <Button 
+      onClick={handleSaveFormation}
+      disabled={!isXIComplete}
+      className={`w-full sm:w-auto ${!isXIComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      Save Formation
+    </Button>
+  </div>
+
+  {/* Alert Banner */}
+  {!isXIComplete && selectedIds.length > 0 && (
+    <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+      <p className="text-xs sm:text-sm text-amber-800">
+        ⚠️ Select {11 - selectedIds.length} more player(s) to complete your Starting XI
+      </p>
+    </div>
+  )}
+
+  {/* Main Layout Grid */}
+  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div className="lg:col-span-3">
+      <Pitch 
+        startingXI={startingXI}
+        setStartingXI={setStartingXI}
+        players={players}
+      />
+    </div>
+    <div className="lg:col-span-1">
+      <SubstituteBench players={substitutes} />
+    </div>
+  </div>
+</div>
   );
 }

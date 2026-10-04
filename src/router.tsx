@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import HookTesting, { HOOK_ROUTE } from "./hook-testing";
 import StartingXI, { XI_TEAM_ROUTE } from "./pages/startingXI";
 import Tasks, { TASK_ROUTE } from "./pages/TaskList";
 import Team from "./pages/team";
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
     {
         path:TESTING_ROUTE,
         element:<Testing/>
-    }
+    },
+    {
+        path:HOOK_ROUTE,
+        element:<HookTesting/>
+    },
 ])
 
 export default router
